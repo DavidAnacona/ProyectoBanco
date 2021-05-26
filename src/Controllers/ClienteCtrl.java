@@ -4,6 +4,7 @@ package Controllers;
 import resources.ListaDoble;
 import persist.ClienteDAO;
 import Modelo.Cliente;
+import Modelo.TipoCliente;
 
 public class ClienteCtrl {
     
@@ -44,13 +45,14 @@ public class ClienteCtrl {
         this.listaClientes = listaClientes;
     }
     
-    public void addCliente(String codigo, String nombre, String correo,String celular, String direccion) {
+    public void addCliente(String codigo, String nombre, String correo,String celular, String direccion, TipoCliente tipoCliente) {
         this.cliente = new Cliente(); 
         this.cliente.setNumIdentidad(Long.parseLong(codigo));
         this.cliente.setNombre(nombre);       
         this.cliente.setCorreo(correo);
         this.cliente.setCelular(Long.parseLong(celular)); 
         this.cliente.setDireccion(direccion);
+        this.cliente.setTipoCliente(tipoCliente);
         this.listaClientes.add(cliente);
     }
     
@@ -71,13 +73,14 @@ public class ClienteCtrl {
         }
     }
     
-    public void modificarCliente(String codigo, String nombre, String correo, String celular, String direccion) {
+    public void modificarCliente(String codigo, String nombre, String correo, String celular, String direccion, TipoCliente tipoCliente) {
         this.cliente = new Cliente(); 
         this.cliente.setNumIdentidad(Long.parseLong(codigo));
         this.cliente.setNombre(nombre);
         this.cliente.setCorreo(correo);
         this.cliente.setCelular(Long.parseLong(celular));
         this.cliente.setDireccion(direccion);
+        this.cliente.setTipoCliente(tipoCliente);
         this.listaClientes.set(indexClienteSelect, cliente);
     }
     
@@ -86,5 +89,19 @@ public class ClienteCtrl {
     }
     public void eliminarCliente(){
         listaClientes.remove(cliente);
+    }
+    
+    public ModeloCliente buscarClientePorTipo(Object tipocliente){
+        TipoCliente tipcli = (TipoCliente)tipocliente;
+        ListaDoble<Cliente> listaFiltrada = new ListaDoble();
+        listaClientes.inicio();
+        for(int i = 0; i<listaClientes.size();i++){
+            Cliente cli = listaClientes.next();
+            if(cli.getTipoCliente().getCodigo() == tipcli.getCodigo()){
+                listaFiltrada.add(cli);
+            }
+        }
+        ModeloCliente modelo = new ModeloCliente(listaFiltrada);
+        return modelo;
     }
 }

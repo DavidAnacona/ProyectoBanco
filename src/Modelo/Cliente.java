@@ -1,5 +1,6 @@
 package Modelo;
 
+import Controllers.TipoClienteCtrl;
 import java.util.StringTokenizer;
 
 
@@ -10,6 +11,7 @@ public class Cliente {
     private String correo;
     private Long celular;
     private String direccion;
+    private TipoCliente tipoCliente;
 
     public Cliente() {
     }
@@ -30,6 +32,8 @@ public class Cliente {
         correo = token.nextToken();
         celular = Long.parseLong(token.nextToken());
         direccion = token.nextToken();
+        TipoClienteCtrl.instancia().buscarTipoClientePorCodigo(Integer.parseInt(token.nextToken()));
+        tipoCliente = TipoClienteCtrl.instancia().getTipocliente();
     }
 
     public Long getNumIdentidad() {
@@ -71,9 +75,19 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
+    public TipoCliente getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+    
+    
     
     public String toRegistro(){
-        return "*" + numIdentidad + "*" + nombre + "*" + correo + "*" + celular + "*" + direccion; 
+        return "*" + numIdentidad + "*" + nombre + "*" + correo + "*" + celular + "*" + direccion + "*" + tipoCliente.getCodigo(); 
     }
     
     @Override

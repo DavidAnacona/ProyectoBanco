@@ -1,0 +1,7 @@
+*10*Administrador
+*11*Cliente frecuente
+*12*Cliente menos frecuente
+*13*cualquier
+*14*cualquieras
+*15*dfgdfg
+*16*melo

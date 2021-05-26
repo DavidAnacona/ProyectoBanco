@@ -1,6 +1,8 @@
 
 package Modelo;
 
+import java.util.StringTokenizer;
+
 public class TipoCliente {
     
     private int codigo;
@@ -14,6 +16,12 @@ public class TipoCliente {
         this.tipo = tipo;
     }
 
+    public TipoCliente(String linea){
+        StringTokenizer token = new StringTokenizer(linea,"*");
+        codigo = Integer.parseInt(token.nextToken());
+        tipo = token.nextToken();   
+    }
+    
     public int getCodigo() {
         return codigo;
     }
@@ -30,5 +38,12 @@ public class TipoCliente {
         this.tipo = tipo;
     }
     
+    public String toRegistro(){
+        return "*" + codigo + "*" + tipo;
+    }
     
+    @Override
+    public String toString(){
+        return codigo + "    " + tipo;
+    }
 }

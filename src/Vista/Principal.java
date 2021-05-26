@@ -5,9 +5,13 @@
  */
 package Vista;
 import Controllers.ClienteCtrl;
+import Controllers.TipoClienteCtrl;
+import Modelo.TipoCliente;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import persist.ClienteDAO;
+import persist.TipoClienteDAO;
 
 /**
  *
@@ -16,6 +20,8 @@ import persist.ClienteDAO;
 public class Principal extends javax.swing.JFrame {
 
     private DefaultListModel modelo;
+    private DefaultListModel modeloTipos;
+                
     /**
      * Creates new form Principal
      */
@@ -53,6 +59,7 @@ public class Principal extends javax.swing.JFrame {
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        cmbTipoUsuario = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -76,8 +83,25 @@ public class Principal extends javax.swing.JFrame {
         listHistorial = new javax.swing.JList<>();
         jLabel14 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        txtCodigoTipo = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        txtTipoCliente = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lstTipoCliente = new javax.swing.JList<>();
+        btnAgregarTipo = new javax.swing.JButton();
+        btnModificarTipo = new javax.swing.JButton();
+        btnEliminarTipo = new javax.swing.JButton();
+        btnNuevoTipo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Documento");
 
@@ -157,34 +181,35 @@ public class Principal extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txtCorreo))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel3)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txtDireccion))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addGap(0, 0, Short.MAX_VALUE))))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNumIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(38, 38, 38)
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNumIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCorreo))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtDireccion))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(btnEditar)
@@ -217,7 +242,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
@@ -227,7 +253,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnEliminar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEditar))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Usuario", jPanel2);
@@ -388,14 +414,101 @@ public class Principal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Realizar Movimiento", jPanel3);
 
+        jLabel15.setText("Codigo:");
+
+        jLabel16.setText("Tipo Cliente:");
+
+        lstTipoCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstTipoClienteMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(lstTipoCliente);
+
+        btnAgregarTipo.setText("Agregar");
+        btnAgregarTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarTipoActionPerformed(evt);
+            }
+        });
+
+        btnModificarTipo.setText("Modificar");
+        btnModificarTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarTipoActionPerformed(evt);
+            }
+        });
+
+        btnEliminarTipo.setText("Eliminar");
+        btnEliminarTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarTipoActionPerformed(evt);
+            }
+        });
+
+        btnNuevoTipo.setText("Nuevo");
+        btnNuevoTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoTipoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel16)
+                                .addComponent(jLabel15))
+                            .addComponent(btnAgregarTipo))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCodigoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(btnModificarTipo)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminarTipo)))
+                        .addGap(10, 10, 10)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNuevoTipo)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(txtCodigoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(txtTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarTipo)
+                    .addComponent(btnModificarTipo)
+                    .addComponent(btnEliminarTipo)
+                    .addComponent(btnNuevoTipo))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
+        );
+
+        jTabbedPane1.addTab("Tipo Cliente", jPanel4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,7 +539,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         ClienteCtrl.instancia().modificarCliente(txtNumIdentidad.getText(), txtNombre.getText(),
-            txtCorreo.getText(), txtCelular.getText(), txtDireccion.getText());
+            txtCorreo.getText(), txtCelular.getText(), txtDireccion.getText(), (TipoCliente) cmbTipoUsuario.getSelectedItem());
         lstClientes.setEnabled(true);
         cargarListaClientes();
         guardarCliente();
@@ -434,11 +547,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         ClienteCtrl.instancia().addCliente(txtNumIdentidad.getText(), txtNombre.getText(),
-            txtCorreo.getText(), txtCelular.getText(), txtDireccion.getText());
+            txtCorreo.getText(), txtCelular.getText(), txtDireccion.getText(), (TipoCliente) cmbTipoUsuario.getSelectedItem());
         limpiarCampos();
         JOptionPane.showMessageDialog(this, "Registro adicionado con exito");
         cargarListaClientes();
         guardarCliente();
+        cargarComboTipos();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void lstClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstClientesMouseClicked
@@ -450,6 +564,7 @@ public class Principal extends javax.swing.JFrame {
             txtCorreo.setText(ClienteCtrl.instancia().getCliente().getCorreo());
             txtCelular.setText(String.valueOf(ClienteCtrl.instancia().getCliente().getCelular()));
             txtDireccion.setText(ClienteCtrl.instancia().getCliente().getDireccion());
+            cmbTipoUsuario.setSelectedItem(ClienteCtrl.instancia().getCliente().getTipoCliente());
         }
     }//GEN-LAST:event_lstClientesMouseClicked
 
@@ -460,6 +575,52 @@ public class Principal extends javax.swing.JFrame {
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDireccionActionPerformed
+
+    private void btnNuevoTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoTipoActionPerformed
+        limpiarCampostipo();
+    }//GEN-LAST:event_btnNuevoTipoActionPerformed
+
+    private void btnAgregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTipoActionPerformed
+        TipoClienteCtrl.instancia().addTipoCliente(txtCodigoTipo.getText(), txtTipoCliente.getText());
+        limpiarCampostipo();
+        cargarListaTipoCliente();
+        JOptionPane.showMessageDialog(this, "Registro adicionado con exito");
+        guardarTipoCliente();
+        cargarComboTipos();
+    }//GEN-LAST:event_btnAgregarTipoActionPerformed
+
+    private void btnModificarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarTipoActionPerformed
+        TipoClienteCtrl.instancia().modificarTipoCliente(txtCodigoTipo.getText(), txtTipoCliente.getText());
+        limpiarCampostipo();
+        cargarListaTipoCliente();
+        JOptionPane.showMessageDialog(this, "Registro modificado con exito");
+        cargarComboTipos();
+    }//GEN-LAST:event_btnModificarTipoActionPerformed
+
+    private void btnEliminarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTipoActionPerformed
+        if(!lstTipoCliente.isSelectionEmpty()){
+            TipoClienteCtrl.instancia().eliminarTipoCliente();
+            limpiarCampostipo();
+            cargarListaTipoCliente();
+            JOptionPane.showMessageDialog(this, "Registro eliminado con exito");
+        }
+        cargarListaTipoCliente();
+        cargarComboTipos();
+    }//GEN-LAST:event_btnEliminarTipoActionPerformed
+
+    private void lstTipoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstTipoClienteMouseClicked
+        if(lstTipoCliente.isEnabled() == true){
+            int index = lstTipoCliente.getSelectedIndex();
+            TipoClienteCtrl.instancia().buscarTipoCliente(index);
+            txtCodigoTipo.setText(String.valueOf(TipoClienteCtrl.instancia().getTipocliente().getCodigo()));
+            txtTipoCliente.setText(TipoClienteCtrl.instancia().getTipocliente().getTipo());
+            
+        }
+    }//GEN-LAST:event_lstTipoClienteMouseClicked
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -498,12 +659,17 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAgregarTipo;
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminarTipo;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnModificarTipo;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnNuevoTipo;
     private javax.swing.JButton btnVerificar;
+    private javax.swing.JComboBox<String> cmbTipoUsuario;
     private javax.swing.JComboBox<String> comboTipoDeCuenta;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -512,6 +678,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -523,27 +691,34 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JList<String> listCuentas;
     private javax.swing.JList<String> listHistorial;
     private javax.swing.JList<String> lstClientes;
+    private javax.swing.JList<String> lstTipoCliente;
     private javax.swing.JPasswordField textClaveMov;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtCodigoCuenta;
+    private javax.swing.JTextField txtCodigoTipo;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumIdentidad;
     private javax.swing.JTextField txtSaldoPromedio;
+    private javax.swing.JTextField txtTipoCliente;
     // End of variables declaration//GEN-END:variables
 
     private void inicializarComponentes() {
         cargarListaClientes();
+        cargarListaTipoCliente();
+        cargarComboTipos();
     }
     
     private void cargarListaClientes(){
@@ -563,7 +738,36 @@ public class Principal extends javax.swing.JFrame {
          txtNombre.setText("");
          txtNumIdentidad.setText("");
      }
+     
+     private void limpiarCampostipo(){
+         txtCodigoTipo.setText("");
+         txtTipoCliente.setText("");
+     }
      private void guardarCliente(){
          ClienteDAO.instancia().guardarCliente(ClienteCtrl.instancia().getListaClientes());
      }
+
+     private void guardarTipoCliente(){
+         TipoClienteDAO.instancia().guardarTipoClientes(TipoClienteCtrl.instancia().getListaTipos());
+     }
+    private void cargarListaTipoCliente() {
+        modeloTipos = new DefaultListModel();
+        TipoClienteCtrl.instancia().getListaTipos().inicio();
+        for(int i=0; i<TipoClienteCtrl.instancia().getListaTipos().size(); i++){
+            modeloTipos.addElement(TipoClienteCtrl.instancia().getListaTipos().next());
+        }
+        lstTipoCliente.setModel(modeloTipos);
+        lstTipoCliente.updateUI();
+        
+    }
+    
+    private void cargarComboTipos(){
+        DefaultComboBoxModel modelComboTipo = new DefaultComboBoxModel();
+        TipoClienteCtrl.instancia().getListaTipos().inicio();
+        for(int i=0; i<TipoClienteCtrl.instancia().getListaTipos().size(); i++){
+            modelComboTipo.addElement(TipoClienteCtrl.instancia().getListaTipos().next());
+        }
+        cmbTipoUsuario.setModel(modelComboTipo);
+        cmbTipoUsuario.updateUI();
+    }
 }
